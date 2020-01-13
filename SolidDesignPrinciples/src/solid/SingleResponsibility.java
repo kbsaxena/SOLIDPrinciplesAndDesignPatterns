@@ -1,6 +1,9 @@
 package solid;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +11,15 @@ import java.util.List;
 public class SingleResponsibility {
 
 	public static void main(String[] args) throws Exception {
+		LoadAndSave loadAndSave = new LoadAndSave();
 		Journal journal = new Journal();
+		
+		loadAndSave.loadEnteries(journal, "loader.txt");
 		journal.addEntry("Solid Principle");
 		journal.addEntry("S Stands for Single Responsibility");
 		System.out.println(journal);
 		
-		new LoadAndSave().saveEnteries(journal, "enteries", true);
+		loadAndSave.saveEnteries(journal, "enteries", true);
 	}
 
 }
@@ -53,9 +59,13 @@ class LoadAndSave {
 	
 	public void loadEnteries(Journal journal, String filename) throws Exception {
 		if(new File(filename).exists()) {
-			
+			try(BufferedReader br = new BufferedReader(new FileReader(filename))){
+				String line = br.readLine();
+				while(line != null) {
+					journal.addEntry(line);
+					line = br.readLine();
+				}
+			}
 		}
-		
-		Runtime.getRuntime().exec("notepad.exe " + filename);
 	}
 }
