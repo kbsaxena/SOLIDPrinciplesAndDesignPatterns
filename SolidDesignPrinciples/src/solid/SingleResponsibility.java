@@ -17,9 +17,9 @@ public class SingleResponsibility {
 		loadAndSave.loadEnteries(journal, "loader.txt");
 		journal.addEntry("Solid Principle");
 		journal.addEntry("S Stands for Single Responsibility");
-		System.out.println(journal);
+		//System.out.println(journal);
 		
-		loadAndSave.saveEnteries(journal, "enteries", true);
+		loadAndSave.saveEnteries(journal, "enteries.txt", true);
 	}
 
 }
